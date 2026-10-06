@@ -139,7 +139,7 @@ class TernaryStrategy(MapStrategy):
                     conds[av] = MIN_COMPOSITION
 
             # Step map
-            step = StepStrategy(self.dbf, self.components, self.phases, conds, models=self.models, **map_kwargs)
+            step = StepStrategy(self.dbf, self.components, self.phases, conds, phase_record_factory=self.phase_records, **map_kwargs)
             step.do_map()
             self.add_starting_points_from_step(step)
 
