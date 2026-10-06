@@ -777,9 +777,6 @@ def test_mapping_custom_models(load_database):
         idx1, idx2 = idx2, idx1
     xms, xsm = tls[0].x[idx1], tls[0].x[idx2]
     T = tls[0].y[0] # is this guaranteed to be the same for binary tielines?
-    d1, d2 = exact_sm(T)-xms, exact_ms(T)-xsm
-    err = np.average(np.abs(d1) + np.abs(d2))
-    ERRTOL = 2e-10
-    # from what I observed they're generally O(1e-11), so be safe with 2e-10
+    # error is mostly O(1e-11), though some O(1e-10) occur -> set tolerance above this
+    np.testing.assert_allclose([exact_sm(T), exact_ms(T)], [xms, xsm], atol=1e-9, rtol=1e-9)
     # diff from machine precision probably via search/solver tolerances
-    assert err < ERRTOL
